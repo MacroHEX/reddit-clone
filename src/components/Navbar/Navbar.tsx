@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <Flex bg="white" height="55px" padding="6px 12px">
       <Flex align="center">
-        <Image src="/images/CLT_LOGO.svg" alt="logo" height="40px" />
+        <Image src="/images/CLT_LOGO.svg" alt="logo" height="40px" mr={{base: 2, md:0}}/>
         <Image
           src="/images/CLT_TEXT.svg"
           alt="text"
