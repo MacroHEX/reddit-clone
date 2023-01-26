@@ -3,8 +3,6 @@ import React from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 
-import RightContent from "./RightContent/RightContent";
-
 type Props = {
   children?: React.ReactElement | React.ReactElement[];
 };
@@ -32,7 +30,6 @@ const SearchInput = ({ children }: Props) => {
           bg="gray.50"
         />
       </InputGroup>
-      <RightContent />
     </Flex>
   );
 };

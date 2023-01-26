@@ -15,8 +15,14 @@ import { authModalState } from "../../atoms/authModalAtom";
 import AuthInputs from "./AuthInputs";
 import OAuthButtons from "./OAuthButtons";
 
+import { auth } from "@/firebase/clientApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from "react";
+
 const AuthModal = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
+
+  const [user, loading, error] = useAuthState(auth);
 
   const handleClose = () => {
     setModalState((prev) => ({
@@ -24,6 +30,12 @@ const AuthModal = () => {
       open: false,
     }));
   };
+
+  useEffect(() => {
+    if (user) handleClose();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   return (
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>
