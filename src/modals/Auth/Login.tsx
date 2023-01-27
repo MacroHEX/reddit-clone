@@ -81,6 +81,26 @@ const Login = () => {
       >
         Inicia Sesión
       </Button>
+
+      <Flex justifyContent="center" mb={2}>
+        <Text fontSize="9pt" mr={1}>
+          Olvidaste tu contraseña?
+        </Text>
+        <Text
+          fontSize="9pt"
+          color="blue.500"
+          cursor="pointer"
+          onClick={() =>
+            setAuthodalState((prev) => ({
+              ...prev,
+              view: "resetPassword",
+            }))
+          }
+        >
+          Restablecer
+        </Text>
+      </Flex>
+
       <Flex fontSize="9pt" justifyContent="center">
         <Text mr={1}>Nuevo Aquí?</Text>
         <Text
