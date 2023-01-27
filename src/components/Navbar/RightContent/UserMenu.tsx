@@ -7,6 +7,7 @@ import {
   Image,
   Flex,
   MenuDivider,
+  Text,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
@@ -46,6 +47,22 @@ const UserMenu = ({ user }: Props) => {
                   mr={1}
                   width={8}
                 />
+                <Flex
+                  direction="column"
+                  display={{ base: "none", lg: "flex" }}
+                  fontSize="8pt"
+                  align="flex-start"
+                  mr={8}
+                  ml={1}
+                >
+                  <Text fontWeight={700}>
+                    {user?.displayName || user.email?.split("@")[0]}
+                  </Text>
+                  <Flex align="center">
+                    <Icon as={IoSparkles} color="brand.100" mr={1} />
+                    <Text color="gray.400">1 karma</Text>
+                  </Flex>
+                </Flex>
               </>
             ) : (
               <Icon fontSize={24} color="gray.400" mr={1} as={VscAccount} />
@@ -72,7 +89,7 @@ const UserMenu = ({ user }: Props) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
-              onClick={() => setAuthModalState({ open: true, view: "login" })}
+              onClick={() => signOut(auth)}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={MdOutlineLogin} />
@@ -86,7 +103,7 @@ const UserMenu = ({ user }: Props) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
-              onClick={() => signOut(auth)}
+              onClick={() => setAuthModalState({ open: true, view: "login" })}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={MdOutlineLogin} />
