@@ -3,11 +3,16 @@ import { GetServerSidePropsContext } from "next";
 
 import { Community } from "@/atoms/communitiesAtom";
 
-import { doc } from "@firebase/firestore";
+import { doc, getDoc } from "@firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
-import { getDoc } from "firebase/firestore";
 
 import safeJsonStringify from "safe-json-stringify";
+
+import NotFound from "@/components/Community/NotFound";
+import Header from "@/components/Community/Header";
+import PageContent from "@/layouts/PageContent";
+import CreatePostLink from "@/components/Community/CreatePostLink";
+import Posts from "@/components/Post/Posts";
 
 type Props = {
   communityData: Community;
@@ -15,19 +20,32 @@ type Props = {
 
 const CommunityPage = ({ communityData }: Props) => {
   if (!communityData) {
-    return <div>No existe</div>;
+    return <NotFound />;
   }
 
-  return <div>{communityData.id}</div>;
+  return (
+    <>
+      <Header communityData={communityData} />
+      <PageContent>
+        <>
+          <CreatePostLink />
+          <Posts communityData={communityData} />
+        </>
+        <>
+          <div>Derecha</div>
+        </>
+      </PageContent>
+    </>
+  );
 };
 
 export default CommunityPage;
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
     const communityDocRef = doc(
       firestore,
-      "communities",
+      "community",
       ctx.query.communityId as string
     );
     const communityDoc = await getDoc(communityDocRef);
@@ -42,7 +60,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       },
     };
   } catch (error) {
-    // Añadir pagina de error
+    // Se puede añadir página de error
     console.log("getServerSideProps error", error);
   }
-}
+};
