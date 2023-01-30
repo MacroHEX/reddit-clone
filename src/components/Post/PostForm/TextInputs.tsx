@@ -1,7 +1,7 @@
-import { Flex, Input, Stack, Textarea, Button } from "@chakra-ui/react";
 import React from "react";
+import { Stack, Input, Textarea, Flex, Button } from "@chakra-ui/react";
 
-type Props = {
+type TextInputsProps = {
   textInputs: {
     title: string;
     body: string;
@@ -13,21 +13,18 @@ type Props = {
   loading: boolean;
 };
 
-const TextInputs = ({
+const TextInputs: React.FC<TextInputsProps> = ({
   textInputs,
   onChange,
   handleCreatePost,
   loading,
-}: Props) => {
+}) => {
   return (
     <Stack spacing={3} width="100%">
       <Input
         name="title"
         value={textInputs.title}
         onChange={onChange}
-        fontSize="10pt"
-        borderRadius={4}
-        placeholder="Título"
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
@@ -35,15 +32,16 @@ const TextInputs = ({
           border: "1px solid",
           borderColor: "black",
         }}
+        fontSize="10pt"
+        borderRadius={4}
+        placeholder="Title"
       />
       <Textarea
         name="body"
         value={textInputs.body}
         onChange={onChange}
-        height="100px"
         fontSize="10pt"
-        borderRadius={4}
-        placeholder="Texto (opcional)"
+        placeholder="Text (optional)"
         _placeholder={{ color: "gray.500" }}
         _focus={{
           outline: "none",
@@ -51,6 +49,7 @@ const TextInputs = ({
           border: "1px solid",
           borderColor: "black",
         }}
+        height="100px"
       />
       <Flex justify="flex-end">
         <Button
@@ -60,11 +59,10 @@ const TextInputs = ({
           isLoading={loading}
           onClick={handleCreatePost}
         >
-          Publicar
+          Post
         </Button>
       </Flex>
     </Stack>
   );
 };
-
 export default TextInputs;

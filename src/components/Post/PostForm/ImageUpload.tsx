@@ -1,36 +1,40 @@
-import { Button, Flex, Image, Stack } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { Ref } from "react";
+import { Flex, Stack, Button, Image } from "@chakra-ui/react";
 
-type Props = {
+type ImageUploadProps = {
   selectedFile?: string;
-  onSelectImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  setSelectedTab: (value: string) => void;
   setSelectedFile: (value: string) => void;
+  setSelectedTab: (value: string) => void;
+  selectFileRef: React.RefObject<HTMLInputElement>;
+  onSelectImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const ImageUpload = ({
+const ImageUpload: React.FC<ImageUploadProps> = ({
   selectedFile,
-  onSelectImage,
-  setSelectedTab,
   setSelectedFile,
-}: Props) => {
-  const selectedFileRef = useRef<HTMLInputElement>(null);
-
+  setSelectedTab,
+  selectFileRef,
+  onSelectImage,
+}) => {
   return (
     <Flex direction="column" justify="center" align="center" width="100%">
       {selectedFile ? (
         <>
-          <Image src={selectedFile} maxWidth="400px" maxHeight="400px" />
+          <Image
+            src={selectedFile as string}
+            maxWidth="400px"
+            maxHeight="400px"
+          />
           <Stack direction="row" mt={4}>
             <Button height="28px" onClick={() => setSelectedTab("Post")}>
-              Volver al post
+              Back to Post
             </Button>
             <Button
-              height="28px"
               variant="outline"
+              height="28px"
               onClick={() => setSelectedFile("")}
             >
-              Eliminar
+              Remove
             </Button>
           </Stack>
         </>
@@ -41,20 +45,22 @@ const ImageUpload = ({
           p={20}
           border="1px dashed"
           borderColor="gray.200"
-          width="100%"
           borderRadius={4}
+          width="100%"
         >
           <Button
             variant="outline"
             height="28px"
-            onClick={() => selectedFileRef.current?.click()}
+            onClick={() => selectFileRef.current?.click()}
           >
-            Subir
+            Upload
           </Button>
           <input
-            ref={selectedFileRef}
+            id="file-upload"
             type="file"
+            accept="image/x-png,image/gif,image/jpeg"
             hidden
+            ref={selectFileRef}
             onChange={onSelectImage}
           />
         </Flex>
@@ -62,5 +68,4 @@ const ImageUpload = ({
     </Flex>
   );
 };
-
 export default ImageUpload;

@@ -1,8 +1,12 @@
-import { authModalState } from "@/atoms/authModalAtom";
 import { Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { authModalState } from "../../../atoms/authModalAtom";
+import AuthModal from "../../Modal/Auth";
 
-const AuthButtons = () => {
+type AuthButtonsProps = {};
+
+const AuthButtons: React.FC<AuthButtonsProps> = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
 
   return (
@@ -11,16 +15,18 @@ const AuthButtons = () => {
         variant="outline"
         height="28px"
         display={{ base: "none", sm: "flex" }}
+        width={{ base: "70px", md: "110px" }}
         mr={2}
-        ml={2}
         onClick={() => setAuthModalState({ open: true, view: "login" })}
       >
-        Iniciar Sesión
+        Ingresar
       </Button>
       <Button
+        variant="solid"
         height="28px"
-        mr={2}
         display={{ base: "none", sm: "flex" }}
+        width={{ base: "70px", md: "110px" }}
+        mr={2}
         onClick={() => setAuthModalState({ open: true, view: "signup" })}
       >
         Registrarse
@@ -28,5 +34,4 @@ const AuthButtons = () => {
     </>
   );
 };
-
 export default AuthButtons;

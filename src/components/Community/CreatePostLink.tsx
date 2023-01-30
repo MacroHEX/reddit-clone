@@ -1,28 +1,26 @@
-import { authModalState } from "@/atoms/authModalAtom";
-import { auth } from "@/firebase/clientApp";
 import { Flex, Icon, Input } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React from "react";
 import { BsLink45Deg } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
 import { IoImageOutline } from "react-icons/io5";
-import { useSetRecoilState } from "recoil";
+import useDirectory from "../../hooks/useDirectory";
 
-const CreatePostLink = () => {
+type CreatePostProps = {};
+
+const CreatePostLink: React.FC<CreatePostProps> = () => {
   const router = useRouter();
-  const [user] = useAuthState(auth);
-  const setAuthModalState = useSetRecoilState(authModalState);
-
+  const { toggleMenuOpen } = useDirectory();
   const onClick = () => {
-    if (!user) {
-      setAuthModalState({ open: true, view: "login" });
+    // Could check for user to open auth modal before redirecting to submit
+    const { community } = router.query;
+    if (community) {
+      router.push(`/r/${router.query.community}/submit`);
       return;
     }
-
-    const { communityId } = router.query;
-    if (communityId) {
-      router.push(`/r/${router.query.communityId}/submit`);
-    }
+    // Open directory menu to select community to post to
+    toggleMenuOpen();
   };
   return (
     <Flex
@@ -38,7 +36,7 @@ const CreatePostLink = () => {
     >
       <Icon as={FaReddit} fontSize={36} color="gray.300" mr={4} />
       <Input
-        placeholder="Crear Publicación"
+        placeholder="Create Post"
         fontSize="10pt"
         _placeholder={{ color: "gray.500" }}
         _hover={{
@@ -70,5 +68,4 @@ const CreatePostLink = () => {
     </Flex>
   );
 };
-
 export default CreatePostLink;
