@@ -76,7 +76,7 @@ const CreateCommunityModal = ({ open, handleClose }: Props) => {
       // Crear la comunidad en firebase
       // Validar si el nombre esta disponible
       // Si es valido crear comunidad
-      const communityDocRef = doc(firestore, "community", communityName);
+      const communityDocRef = doc(firestore, "communities", communityName);
 
       await runTransaction(firestore, async (transaction) => {
         const communityDoc = await transaction.get(communityDocRef);

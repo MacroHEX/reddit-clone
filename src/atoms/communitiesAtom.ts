@@ -7,17 +7,17 @@ export interface Community {
   numberOfMembers: number;
   privacyType: "public" | "restricted" | "private";
   createdAt?: Timestamp;
-  imageUrl?: string;
+  imageURL?: string;
 }
 
 export interface CommunitySnippet {
   communityId: string;
   isModerator?: boolean;
-  imageUrl?: string;
+  imageURL?: string;
 }
 interface CommunityState {
   mySnippets: CommunitySnippet[];
-  // visitedCommunities
+  currentCommunity?: Community;
 }
 
 const defaultCommunityState: CommunityState = {

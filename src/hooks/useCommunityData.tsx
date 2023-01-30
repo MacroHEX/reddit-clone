@@ -72,7 +72,7 @@ const useCommunityData = () => {
       const batch = writeBatch(firestore);
       const newSnippet: CommunitySnippet = {
         communityId: communityData.id,
-        imageUrl: communityData.imageUrl || "",
+        imageURL: communityData.imageURL || "",
       };
       batch.set(
         doc(
@@ -83,7 +83,7 @@ const useCommunityData = () => {
         newSnippet
       );
       // updating the number of members
-      batch.update(doc(firestore, "community", communityData.id), {
+      batch.update(doc(firestore, "communities", communityData.id), {
         numberOfMembers: increment(1),
       });
 
@@ -110,7 +110,7 @@ const useCommunityData = () => {
     );
 
     // updating the number of members(-1)
-    batch.update(doc(firestore, "community", communityId), {
+    batch.update(doc(firestore, "communities", communityId), {
       numberOfMembers: increment(-1),
     });
 

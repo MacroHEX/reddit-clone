@@ -7,9 +7,13 @@ import { Box, Text } from "@chakra-ui/react";
 import { auth } from "@/firebase/clientApp";
 import PageContent from "@/layouts/PageContent";
 import NewPostForm from "@/components/Post/NewPostForm";
+import { useRecoilValue } from "recoil";
+import { communityState } from "@/atoms/communitiesAtom";
 
 const SubmitPostPage = () => {
   const [user] = useAuthState(auth);
+  const communityStateValue = useRecoilValue(communityState);
+  console.log("Community state:", communityStateValue);
   return (
     <PageContent maxWidth="1060px">
       <>
@@ -22,7 +26,7 @@ const SubmitPostPage = () => {
         {/* {user && (
           <NewPostForm
             communityId={communityStateValue.currentCommunity.id}
-            communityImageURL={communityStateValue.currentCommunity.imageURL}
+            communityimageURL={communityStateValue.currentCommunity.imageURL}
             user={user}
           />
         )} */}

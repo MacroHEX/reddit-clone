@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSidePropsContext } from "next";
 
-import { Community } from "@/atoms/communitiesAtom";
+import { Community, communityState } from "@/atoms/communitiesAtom";
 
 import { doc, getDoc } from "@firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
@@ -13,15 +13,27 @@ import Header from "@/components/Community/Header";
 import PageContent from "@/layouts/PageContent";
 import CreatePostLink from "@/components/Community/CreatePostLink";
 import Posts from "@/components/Post/Posts";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import About from "../../../components/Community/About";
 
 type Props = {
   communityData: Community;
 };
 
 const CommunityPage = ({ communityData }: Props) => {
+  const setCommunityStateValue = useSetRecoilState(communityState);
+
   if (!communityData) {
     return <NotFound />;
   }
+
+  useEffect(() => {
+    setCommunityStateValue((prev) => ({
+      ...prev,
+      currentCommunity: communityData,
+    }));
+  }, []);
 
   return (
     <>
@@ -32,7 +44,7 @@ const CommunityPage = ({ communityData }: Props) => {
           <Posts communityData={communityData} />
         </>
         <>
-          <div>Derecha</div>
+          <About communityData={communityData} />
         </>
       </PageContent>
     </>
@@ -45,7 +57,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
     const communityDocRef = doc(
       firestore,
-      "community",
+      "communities",
       ctx.query.communityId as string
     );
     const communityDoc = await getDoc(communityDocRef);
